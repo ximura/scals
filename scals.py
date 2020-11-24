@@ -1,14 +1,13 @@
 from typing import List, Set, Dict, Tuple, Optional
 
 class check_sets_count(object):
-
     def __init__(self, f):
         self.f = f
 
     def __call__(self, *args):
         # not enough data, return empty set
         if len(args[1]) < args[0] :
-           return {}
+           return set()
         return self.f(*args)
 
 def load(filename: str) -> Set[int]: 
