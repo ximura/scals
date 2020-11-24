@@ -71,12 +71,12 @@ class Scals():
     def __execute_cmd(self, cmd: str):
         m = self.pattern.match(cmd)
         if not m:
-            raise Exception(f"ERROR cant parse command {cmd}")
+            raise Exception("ERROR cant parse command {}".format(cmd))
 
         command = m.group(1).lower()
 
         if not hasattr(self, command):
-            raise Exception(f"ERROR unknown command {command}")
+            raise Exception("ERROR unknown command {}".format(command))
 
         n = int(m.group(2))
         sets = [name for name in m.group(3).split(" ") if len(name) > 0]
