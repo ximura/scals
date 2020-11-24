@@ -1,19 +1,21 @@
 import os.path
 import sys
 import re
-from typing import List, Set, Dict, Tuple, Optional
+from typing import List, Set, Dict
+
 
 def check_sets_count(method):
     def inner(ref, *args):
-        if len(args[1]) < args[0] :
-           return set()
+        if len(args[1]) < args[0]:
+            return set()
 
         return method(ref, *args)
     return inner
 
+
 class Scals():
     def __init__(self):
-        self.pattern = re.compile('\s*([a-zA-Z]+)\s*(\d)(.*)')
+        self.pattern = re.compile(r'\s*([a-zA-Z]+)\s*(\d)(.*)')
         self.cmd_result = dict()
 
     def parse_cmd(self, cmd: str):
@@ -45,7 +47,7 @@ class Scals():
         return Scals.eq_impl(n, (self.__load(arg) for arg in argv))
 
     @staticmethod
-    def eq_impl(n:int, argv: List[Set[int]]) -> Set[int]:
+    def eq_impl(n: int, argv: List[Set[int]]) -> Set[int]:
         count_dict = Scals.__fill_count_dict(argv)
         return set((k for k, v in count_dict.items() if v == n))
 
@@ -53,16 +55,16 @@ class Scals():
         return Scals.le_impl(n, [self.__load(arg) for arg in argv])
 
     @staticmethod
-    def le_impl(n:int, argv: List[Set[int]]) -> Set[int]:
+    def le_impl(n: int, argv: List[Set[int]]) -> Set[int]:
         count_dict = Scals.__fill_count_dict(argv)
         return set((k for k, v in count_dict.items() if v < n))
 
     @check_sets_count
     def gr(self, n: int, argv) -> Set[int]:
         return Scals.gr_impl(n, (self.__load(arg) for arg in argv))
-    
+
     @staticmethod
-    def gr_impl(n:int, argv: List[Set[int]]) -> Set[int]:
+    def gr_impl(n: int, argv: List[Set[int]]) -> Set[int]:
         count_dict = Scals.__fill_count_dict(argv)
         return set((k for k, v in count_dict.items() if v > n))
 
@@ -99,7 +101,9 @@ class Scals():
                 count_dict[a] = count_dict.get(a, 0) + 1
         return count_dict
 
+
 if __name__ == "__main__":
     argv = ' '.join(sys.argv[1:])
+    print(f"Command line {argv}")
     scals = Scals()
     print(scals.parse_cmd(argv))
