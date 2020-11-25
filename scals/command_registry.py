@@ -28,7 +28,7 @@ class CommandRegistry():
             return self.cmd_result[filename]
 
         if not os.path.isfile(filename):
-            print(f"ERROR file not found {filename}")
+            print("ERROR file not found {}".format(filename))
             return set()
 
         return set(int(line.strip()) for line in open(filename))
